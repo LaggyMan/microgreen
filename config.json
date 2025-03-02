@@ -1,0 +1,5 @@
+{
+    "thingsboard_url": "http://localhost:8080",
+    "username": "microgreen@thingsboard.io",
+    "password": "microgreen"
+}
