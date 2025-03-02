@@ -31,13 +31,21 @@ for row in data:
         city_asset = {
             "name": city_name,
             "type": "city",
-            "additionalInfo": {
-                "latitude": float(row["city_lat"]),
-                "longitude": float(row["city_lon"])
-            }
         }
         created_city = rest_client.save_asset(body=city_asset)
         print(f"Создан ассет (город): {created_city.name}")
+
+        # Добавляем атрибуты latitude и longitude через save_entity_attributes_v2
+        city_attributes = {
+            "latitude": float(row["city_lat"]),
+            "longitude": float(row["city_lon"])
+        }
+        rest_client.save_entity_attributes_v1(
+            entity_id=created_city.id,
+            scope="SERVER_SCOPE",
+            body=city_attributes
+        )
+        print(f"Добавлены атрибуты для города {created_city.name}")
     else:
         created_city = city_asset[0]
 
@@ -45,13 +53,21 @@ for row in data:
     farm_asset = {
         "name": farm_name,
         "type": "farm",
-        "additionalInfo": {
-            "latitude": float(row["farm_lat"]),
-            "longitude": float(row["farm_lon"])
-        }
     }
     created_farm = rest_client.save_asset(body=farm_asset)
     print(f"Создан ассет (ферма): {created_farm.name}")
+
+    # Добавляем атрибуты latitude и longitude через save_entity_attributes_v2
+    farm_attributes = {
+        "latitude": float(row["farm_lat"]),
+        "longitude": float(row["farm_lon"])
+    }
+    rest_client.save_entity_attributes_v1(
+        entity_id=created_farm.id,
+        scope="SERVER_SCOPE",
+        body=farm_attributes
+    )
+    print(f"Добавлены атрибуты для фермы {created_farm.name}")
 
     # Связываем ферму с городом
     relation = {
